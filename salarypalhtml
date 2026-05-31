@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연차 협상 어시스턴트 - 시장 연봉 1초 확인</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* ===== 네비게이션 ===== */
+        nav {
+            background: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #666;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        /* ===== 히어로 섹션 ===== */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button, .btn {
+            padding: 0.9rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: #2563eb;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #2563eb;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: #f0f9ff;
+            transform: translateY(-2px);
+        }
+
+        /* ===== 기능 섹션 ===== */
+        .features {
+            padding: 5rem 2rem;
+            background: #f8fafc;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-bottom: 3rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: #1e293b;
+        }
+
+        .feature-card p {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        /* ===== 앱 데모 섹션 ===== */
+        .demo {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .demo-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .demo-text h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .demo-text p {
+            font-size: 1.05rem;
+            color: #64748b;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        .demo-steps {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .demo-steps li {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: #f0f9ff;
+            border-left: 4px solid #2563eb;
+            border-radius: 0.5rem;
+        }
+
+        .demo-steps li strong {
+            color: #2563eb;
+        }
+
+        /* ===== 앱 프리뷰 ===== */
+        .app-preview {
+            background: #f8fafc;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .phone-frame {
+            background: white;
+            border-radius: 2rem;
+            padding: 12px;
+            max-width: 100%;
+            margin: 0 auto;
+            box-shadow: inset 0 0 0 8px #000;
+        }
+
+        .phone-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 1.5rem;
+            padding: 2rem;
+            color: white;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .phone-header {
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .phone-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .salary-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .salary-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .salary-value {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .comparison-item {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        /* ===== 요금 섹션 ===== */
+        .pricing {
+            padding: 5rem 2rem;
+            background: #f8fafc;
+        }
+
+        .pricing-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .pricing-card.featured {
+            border: 3px solid #2563eb;
+            transform: scale(1.05);
+        }
+
+        .pricing-card.featured::before {
+            content: "인기";
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2563eb;
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+
+        .price-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .price-amount {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 0.5rem;
+        }
+
+        .price-period {
+            color: #64748b;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .price-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .price-features li {
+            padding: 0.7rem 0;
+            color: #64748b;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+        }
+
+        .price-features li::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        /* ===== 수익 모델 섹션 ===== */
+        .revenue {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .revenue-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .revenue-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .revenue-item {
+            background: #f8fafc;
+            padding: 2rem;
+            border-radius: 1rem;
+            border-left: 4px solid #2563eb;
+        }
+
+        .revenue-item:nth-child(2) {
+            border-left-color: #8b5cf6;
+        }
+
+        .revenue-item:nth-child(3) {
+            border-left-color: #06b6d4;
+        }
+
+        .revenue-item:nth-child(4) {
+            border-left-color: #ec4899;
+        }
+
+        .revenue-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .revenue-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #1e293b;
+        }
+
+        .revenue-item p {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        /* ===== 타임라인 섹션 ===== */
+        .timeline {
+            padding: 5rem 2rem;
+            background: #f8fafc;
+        }
+
+        .timeline-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 50px;
+            bottom: -50px;
+            width: 2px;
+            background: #e2e8f0;
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-dot {
+            width: 30px;
+            height: 30px;
+            background: #2563eb;
+            border-radius: 50%;
+            position: relative;
+            z-index: 1;
+            margin-right: 2rem;
+            margin-top: 0.2rem;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.8rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            flex: 1;
+        }
+
+        .timeline-content h3 {
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content p {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        /* ===== 커뮤니티 섹션 ===== */
+        .community {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .community-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .community-posts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .post-card {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border-left: 4px solid #2563eb;
+        }
+
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .post-meta {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-meta strong {
+            color: #1e293b;
+            font-size: 0.95rem;
+        }
+
+        .post-meta small {
+            color: #94a3b8;
+            font-size: 0.85rem;
+        }
+
+        .post-content {
+            color: #475569;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .post-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .post-tag {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 0.3rem 0.7rem;
+            border-radius: 0.3rem;
+            font-size: 0.8rem;
+        }
+
+        /* ===== CTA 섹션 ===== */
+        .cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        /* ===== 푸터 ===== */
+        footer {
+            background: #1e293b;
+            color: #cbd5e1;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .footer-section h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section a {
+            color: #cbd5e1;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #334155;
+            padding-top: 2rem;
+            text-align: center;
+        }
+
+        /* ===== 반응형 ===== */
+        @media (max-width: 768px) {
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .demo-container {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            button, .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 네비게이션 -->
+    <nav>
+        <div class="logo">💼 SalaryPal</div>
+        <ul>
+            <li><a href="#features">기능</a></li>
+            <li><a href="#demo">데모</a></li>
+            <li><a href="#pricing">요금</a></li>
+            <li><a href="#community">커뮤니티</a></li>
+        </ul>
+    </nav>
+
+    <!-- 히어로 섹션 -->
+    <section class="hero">
+        <h1>당신의 연봉이 시장 수준인지<br>1초만에 알아보세요</h1>
+        <p>직장인을 위한 스마트 연봉 협상 어시스턴트</p>
+        <div class="cta-buttons">
+            <button class="btn-primary">지금 시작하기</button>
+            <button class="btn-secondary">데모 보기</button>
+        </div>
+    </section>
+
+    <!-- 기능 섹션 -->
+    <section class="features" id="features">
+        <div class="features-container">
+            <h2 class="section-title">핵심 기능</h2>
+            <p class="section-subtitle">당신의 연봉을 객관적으로 분석하고, 협상 방법을 제시합니다</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>시장 연봉 비교</h3>
+                    <p>직무, 연차, 회사 규모별로 정확한 시장 연봉 데이터를 확인하세요. 당신이 상위 몇 %에 위치하는지 한눈에 파악할 수 있습니다.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>AI 협상 가이드</h3>
+                    <p>인공지능이 당신의 상황에 맞게 맞춤형 협상 스크립트를 생성해줍니다. 자신감 있게 협상에 임하세요.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>커뮤니티 팁</h3>
+                    <p>같은 직무, 같은 연차의 직장인들과 경험을 공유하고 현실적인 조언을 얻으세요. 익명이므로 안전합니다.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>협상 시나리오</h3>
+                    <p>보수안, 중간안, 공격안 3가지 시나리오를 제시받습니다. 당신의 상황에 맞는 안을 선택하세요.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3>완벽한 익명성</h3>
+                    <p>개인정보는 절대 공개되지 않습니다. 회사에 알려질 걱정 없이 안전하게 이용할 수 있습니다.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>모바일 최적화</h3>
+                    <p>언제 어디서나 앱으로 쉽게 확인하세요. iOS와 Android 모두 지원합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 데모 섹션 -->
+    <section class="demo" id="demo">
+        <div class="demo-container">
+            <div class="demo-text">
+                <h2>간단한 3단계로<br>당신의 연봉을 파악하세요</h2>
+                <p>복잡한 계산이나 설문지는 필요 없습니다. 정보를 입력하면 AI가 나머지를 처리해줍니다.</p>
+                
+                <ul class="demo-steps">
+                    <li><strong>Step 1:</strong> 직급, 연차, 직무, 회사 규모 입력</li>
+                    <li><strong>Step 2:</strong> 시장 평균 연봉과 당신의 위치 확인</li>
+                    <li><strong>Step 3:</strong> AI가 제시하는 협상 시나리오 검토</li>
+                </ul>
+
+                <p style="margin-top: 2rem; color: #2563eb; font-weight: bold;">
+                    💡 Tip: 협상 전에 커뮤니티에서 비슷한 경험을 한 사람들의 팁을 먼저 확인하세요!
+                </p>
+            </div>
+
+            <div class="app-preview">
+                <div class="phone-frame">
+                    <div class="phone-content">
+                        <div class="phone-header">
+                            연차 협상 어시스턴트
+                        </div>
+
+                        <div class="phone-main">
+                            <div class="salary-card">
+                                <div class="salary-label">당신의 현재 연봉</div>
+                                <div class="salary-value">₩5,000만</div>
+                            </div>
+
+                            <div class="salary-card">
+                                <div class="salary-label">시장 평균 연봉</div>
+                                <div class="salary-value" style="color: #fbbf24;">₩5,200만</div>
+                            </div>
+
+                            <div class="comparison">
+                                <div class="comparison-item">
+                                    <div style="opacity: 0.8;">하위 25%</div>
+                                    <div style="font-weight: bold;">₩4,500만</div>
+                                </div>
+                                <div class="comparison-item">
+                                    <div style="opacity: 0.8;">상위 25%</div>
+                                    <div style="font-weight: bold;">₩6,000만</div>
+                                </div>
+                            </div>
+
+                            <div class="salary-card" style="margin-top: 1.5rem;">
+                                <div class="salary-label">추천 협상액</div>
+                                <div class="salary-value" style="color: #10b981;">₩5,600만</div>
+                                <div style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.8;">상위 40% 수준</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 수익 모델 섹션 -->
+    <section class="revenue" id="revenue">
+        <div class="revenue-container">
+            <h2 class="section-title">4가지 수익 모델</h2>
+            <p class="section-subtitle">지속 가능한 비즈니스 구조로 건강한 서비스를 제공합니다</p>
+
+            <div class="revenue-grid">
+                <div class="revenue-item">
+                    <div class="revenue-icon">📢</div>
+                    <h3>광고 수익</h3>
+                    <p>직무별 광고 네트워크를 통한 타겟팅된 광고 서빙으로 월 수익 창출</p>
+                </div>
+
+                <div class="revenue-item">
+                    <div class="revenue-icon">⭐</div>
+                    <h3>프리미엄 구독</h3>
+                    <p>무제한 비교, AI 상담, 광고 제거 등 프리미엄 기능 제공</p>
+                </div>
+
+                <div class="revenue-item">
+                    <div class="revenue-icon">🤝</div>
+                    <h3>제휴 수수료</h3>
+                    <p>원티드, 사람인 등 채용 플랫폼 제휴로 CPL 수익</p>
+                </div>
+
+                <div class="revenue-item">
+                    <div class="revenue-icon">🏢</div>
+                    <h3>기업 B2B</h3>
+                    <p>기업 HR팀에 직원 연봉 공정성 분석 도구 판매</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 요금 섹션 -->
+    <section class="pricing" id="pricing">
+        <div class="pricing-container">
+            <h2 class="section-title">간단한 요금</h2>
+            <p class="section-subtitle">당신의 필요에 맞는 요금제를 선택하세요</p>
+
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="price-title">기본 무료</div>
+                    <div class="price-amount">₩0</div>
+                    <div class="price-period">영구 무료</div>
+                    <ul class="price-features">
+                        <li>시장 연봉 비교 (주 1회)</li>
+                        <li>기본 협상 가이드</li>
+                        <li>커뮤니티 읽기</li>
+                        <li>광고 표시</li>
+                    </ul>
+                    <button class="btn-secondary" style="width: 100%;">지금 시작</button>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="price-title">프리미엄</div>
+                    <div class="price-amount">₩2,900</div>
+                    <div class="price-period">월간 구독</div>
+                    <ul class="price-features">
+                        <li>무제한 연봉 비교</li>
+                        <li>AI 맞춤형 협상 가이드</li>
+                        <li>개인 협상 컨설턴트</li>
+                        <li>연봉 추이 그래프</li>
+                        <li>광고 제거</li>
+                        <li>커뮤니티 우선순위</li>
+                    </ul>
+                    <button class="btn-primary" style="width: 100%;">구독 시작</button>
+                </div>
+
+                <div class="pricing-card">
+                    <div class="price-title">기업 플랜</div>
+                    <div class="price-amount">맞춤형</div>
+                    <div class="price-period">연간 계약</div>
+                    <ul class="price-features">
+                        <li>직원 연봉 분석 리포트</li>
+                        <li>연봉 공정성 진단</li>
+                        <li>정기 업데이트</li>
+                        <li>전담 담당자</li>
+                        <li>커스터마이징 가능</li>
+                    </ul>
+                    <button class="btn-secondary" style="width: 100%;">문의하기</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 타임라인 섹션 -->
+    <section class="timeline">
+        <div class="timeline-container">
+            <h2 class="section-title">개발 로드맵</h2>
+            <p class="section-subtitle" style="margin-bottom: 2rem;">우리의 성장 계획을 확인하세요</p>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Phase 1: MVP 론칭</h3>
+                    <p><strong>2주 내:</strong> 기본 기능 (시장 연봉 비교, 기본 가이드)을 포함한 MVP 앱 배포. Google Play & App Store에 출시.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Phase 2: 초기 성장 (1개월)</h3>
+                    <p><strong>목표:</strong> 사용자 500명 확보. 커뮤니티 시더 운영. 사용자 피드백 수집 및 버그 픽스. 광고 연동.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Phase 3: 기능 확장 (3개월)</h3>
+                    <p><strong>목표:</strong> 사용자 10,000명. AI 협상 가이드 고도화. 프리미엄 구독 출시. 제휴사 확보 (원티드, 사람인).</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-dot"></div>
+                <div class="timeline-content">
+                    <h3>Phase 4: B2B 확장 (6개월 이후)</h3>
+                    <p><strong>목표:</strong> 기업 고객 확보. 기업용 연봉 분석 도구 판매. 데이터 정확도 향상. 국제 확장 준비.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 커뮤니티 섹션 -->
+    <section class="community" id="community">
+        <div class="community-container">
+            <h2 class="section-title">커뮤니티</h2>
+            <p class="section-subtitle">실제 직장인들의 경험과 조언을 나누는 공간</p>
+
+            <div class="community-posts">
+                <div class="post-card">
+                    <div class="post-author">
+                        <div class="post-avatar">A</div>
+                        <div class="post-meta">
+                            <strong>익명_001</strong>
+                            <small>2시간 전</small>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        "삼성전자 개발팀 3년차인데 이 앱 보고 협상했어요. 시장 평균이 ₩5,200만이라는 데이터를 제시했더니 ₩5,600만을 받았습니다! 정말 추천합니다!"
+                    </div>
+                    <div class="post-tags">
+                        <span class="post-tag">#개발</span>
+                        <span class="post-tag">#3년차</span>
+                        <span class="post-tag">#협상성공</span>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-author">
+                        <div class="post-avatar">B</div>
+                        <div class="post-meta">
+                            <strong>익명_245</strong>
+                            <small>5시간 전</small>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        "스타트업 기획팀 2년차입니다. 현재 ₩4,500만인데 시장에선 ₩4,800만이라고 나왔네요. 마케팅 팀장께 데이터를 보여드리고 협상 예정입니다. 응원해주세요!"
+                    </div>
+                    <div class="post-tags">
+                        <span class="post-tag">#기획</span>
+                        <span class="post-tag">#2년차</span>
+                        <span class="post-tag">#준비중</span>
+                    </div>
+                </div>
+
+                <div class="post-card">
+                    <div class="post-author">
+                        <div class="post-avatar">C</div>
+                        <div class="post-meta">
+                            <strong>익명_789</strong>
+                            <small>1일 전</small>
+                        </div>
+                    </div>
+                    <div class="post-content">
+                        "AI가 만들어준 협상 스크립트가 정말 도움됐어요. 처음엔 어떻게 말할지 몰랐는데 구체적인 시나리오가 있으니 자신감이 생겼습니다."
+                    </div>
+                    <div class="post-tags">
+                        <span class="post-tag">#AI협상가이드</span>
+                        <span class="post-tag">#도움됨</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA 섹션 -->
+    <section class="cta">
+        <h2>지금 당신의 진정한 시장가치를<br>확인해보세요</h2>
+        <p>수천 명의 직장인들이 이미 사용 중입니다</p>
+        <div class="cta-buttons">
+            <button class="btn-primary">무료로 시작하기</button>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>💼 SalaryPal</h3>
+                <p>직장인을 위한 스마트 연봉 협상 어시스턴트</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>서비스</h3>
+                <a href="#features">기능</a>
+                <a href="#pricing">요금</a>
+                <a href="#community">커뮤니티</a>
+            </div>
+
+            <div class="footer-section">
+                <h3>정보</h3>
+                <a href="#">개인정보처리방침</a>
+                <a href="#">이용약관</a>
+                <a href="#">고객 지원</a>
+            </div>
+
+            <div class="footer-section">
+                <h3>다운로드</h3>
+                <a href="#">iOS 앱스토어</a>
+                <a href="#">안드로이드 플레이</a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 SalaryPal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 스무스 스크롤
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 버튼 클릭 이벤트
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.textContent.includes('시작') || this.textContent.includes('구독')) {
+                    alert('📱 앱 다운로드 페이지로 이동합니다.\n(실제 앱은 아직 개발 중입니다)');
+                } else if (this.textContent.includes('데모')) {
+                    alert('앱 데모 영상을 시청합니다.');
+                } else if (this.textContent.includes('문의')) {
+                    alert('📧 contact@salarypal.com 으로 문의해주세요.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
